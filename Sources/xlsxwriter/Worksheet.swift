@@ -109,6 +109,8 @@ public struct Worksheet {
       worksheet_write_number(lxw_worksheet, r, c, num, f)
     case .image(let imagePath):
       error = imagePath.withCString { s in worksheet_insert_image(lxw_worksheet, r, c, s) }
+    case .embedImage(let imagePath):
+      error = imagePath.withCString { s in worksheet_embed_image(lxw_worksheet, r, c, s) }
     }
     if error.rawValue != 0 { fatalError(String(cString: lxw_strerror(error))) }
 
