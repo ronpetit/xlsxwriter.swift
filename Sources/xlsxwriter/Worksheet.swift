@@ -107,6 +107,8 @@ public struct Worksheet {
       error = lxw_error(rawValue: 0)
       let num = (datetime.timeIntervalSince1970 / 86400) + 25569
       worksheet_write_number(lxw_worksheet, r, c, num, f)
+    case .image(let imagePath):
+      error = imagePath.withCString { s in worksheet_insert_image(lxw_worksheet, r, c, s) }
     }
     if error.rawValue != 0 { fatalError(String(cString: lxw_strerror(error))) }
 
